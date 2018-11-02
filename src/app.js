@@ -5,7 +5,7 @@ const path = require('path');
 
 const route = require('./helper/route');
 
-//创建一个server
+//创建一个server  2
 const server = http.createServer((req,res) => {
 	const filePath = path.join(conf.root,req.url);
 	
