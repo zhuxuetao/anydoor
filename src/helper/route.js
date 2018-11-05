@@ -13,6 +13,8 @@ const mime = require('./mime');
 //引用定义压缩方法 return
 const compress = require('./compress');
 
+const range = require('./range');
+
 
 module.exports = async function(req, res, filePath) {
     try {
@@ -20,13 +22,21 @@ module.exports = async function(req, res, filePath) {
         const stats = await stat(filePath);
         //判断是否为文件
         if (stats.isFile()) {
-            res.statusCode = 200;
             //识别文件后缀名   对应给出Content-type 类型
             const contentType = mime(filePath);
             console.info('-------' + contentType);
             res.setHeader("Conetnt-Type", contentType);
             //createReadStream获取数据流 pipe 获取多少展示多少
-            let rs = fs.createReadStream(filePath);
+            let rs;
+
+            const { code, start, end } = range(stats.size, req, res);
+            if (code === 200) {
+                res.statusCode = 200;
+                rs = fs.createReadStream(filePath)
+            } else {
+                res.statusCode = 206;
+                rs = fs.createReadStream(filePath, { start, end });
+            }
 
             if (filePath.match(config.compress)) {
                 rs = compress(rs, req, res);
