@@ -18,5 +18,8 @@
   "homepage": "https://github.com/zhuxuetao/anydoor#readme",
   "devDependencies": {
     "chalk": "^2.4.1"
+  },
+  "dependencies": {
+    "handlebars": "^4.0.12"
   }
 }
