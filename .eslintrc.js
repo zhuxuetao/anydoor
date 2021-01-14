@@ -12,6 +12,8 @@ module.exports = {
         "sourceType": "script"
     },
     "rules": {
-        "no-console": "error"
+        "no-console": ["error", {
+            "allow": ["info","error", "warn"]
+        }]
     }
 };

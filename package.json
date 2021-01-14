@@ -7,7 +7,10 @@
     "lint": "eslint .",
     "fix": "eslint --fix"
   },
-  "pre-commit": ["fix", "lint"],
+  "pre-commit": [
+    "fix",
+    "lint"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zhuxuetao/anydoor.git"
@@ -22,5 +25,8 @@
     "babel-eslint": "7.2.3",
     "eslint": "4.5.0",
     "pre-commit": "^1.2.2"
+  },
+  "dependencies": {
+    "chalk": "^4.1.0"
   }
 }
