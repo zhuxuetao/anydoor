@@ -1,25 +1,26 @@
 {
-  "name": "anydoor",
+  "name": "zhuxuetao",
   "version": "1.0.0",
-  "description": "web server",
-  "main": "index.js",
+  "description": "first web server",
+  "main": " ",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "eslint .",
+    "fix": "eslint --fix"
   },
+  "pre-commit": ["fix", "lint"],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zhuxuetao/anydoor.git"
   },
-  "author": "",
+  "author": "zhuxuetao",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/zhuxuetao/anydoor/issues"
   },
   "homepage": "https://github.com/zhuxuetao/anydoor#readme",
   "devDependencies": {
-    "chalk": "^2.4.1"
-  },
-  "dependencies": {
-    "handlebars": "^4.0.12"
+    "babel-eslint": "7.2.3",
+    "eslint": "4.5.0",
+    "pre-commit": "^1.2.2"
   }
 }
