@@ -11,16 +11,24 @@ const template = Handlebars.compile(source)
 const config = require('../config/defaultConfig.js')
 const mime = require('./mime.js')
 const compress = require('./compress')
+const range = require('./range')
 
 module.exports = async (req, res, filePath) => {
     try {
         const stats = await stat(filePath)
         if (stats.isFile()) {
             const ContentType = mime(filePath)
-            res.statusCode = 200
             res.setHeader('Content-type', ContentType)
             
-            let rs = fs.createReadStream(filePath)
+            const {code, start, end} = range(stats.size, req, res)
+            let rs
+            if (code == 200) {
+                res.statusCode = 200
+                rs = fs.createReadStream(filePath)
+            } else {                
+                res.statusCode = 206
+                rs = fs.createReadStream(filePath, {start, end})
+            }            
             
             if (filePath.match(config.compress)) {
                 rs = compress(rs, req, res)
