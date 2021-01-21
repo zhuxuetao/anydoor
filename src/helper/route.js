@@ -12,6 +12,7 @@ const config = require('../config/defaultConfig.js')
 const mime = require('./mime.js')
 const compress = require('./compress')
 const range = require('./range')
+const isFresh = require('./cache')
 
 module.exports = async (req, res, filePath) => {
     try {
@@ -19,6 +20,12 @@ module.exports = async (req, res, filePath) => {
         if (stats.isFile()) {
             const ContentType = mime(filePath)
             res.setHeader('Content-type', ContentType)
+            
+            if (isFresh(stats, req, res)) {
+                res.statusCode = 304
+                res.end()
+                return
+            }
             
             const {code, start, end} = range(stats.size, req, res)
             let rs
@@ -28,12 +35,10 @@ module.exports = async (req, res, filePath) => {
             } else {                
                 res.statusCode = 206
                 rs = fs.createReadStream(filePath, {start, end})
-            }            
-            
+            }                        
             if (filePath.match(config.compress)) {
                 rs = compress(rs, req, res)
-            }
-            
+            }            
             rs.pipe(res)
         } else  if (stats.isDirectory()) {
             const files = await readdir(filePath)
@@ -53,7 +58,6 @@ module.exports = async (req, res, filePath) => {
                 files,
                 directoryType
             }
-
             res.end(template(data))
         }
     } catch (e) {
