@@ -2,15 +2,14 @@
   "name": "zhuxuetao",
   "version": "1.0.0",
   "description": "first web server",
-  "main": " ",
+  "main": "src/app.js",
+  "bin": {
+    "anydoor": "bin/anydoor"
+  },
   "scripts": {
     "lint": "eslint .",
     "fix": "eslint --fix"
   },
-  // "pre-commit": [
-  //   "fix",
-  //   "lint"
-  // ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zhuxuetao/anydoor.git"
@@ -23,10 +22,11 @@
   "homepage": "https://github.com/zhuxuetao/anydoor#readme",
   "devDependencies": {
     "babel-eslint": "7.2.3",
-    "eslint": "4.5.0",
-    "pre-commit": "^1.2.2"
+    "eslint": "4.5.0"
   },
   "dependencies": {
-    "chalk": "^4.1.0"
+    "chalk": "^4.1.0",
+    "handlebars": "^4.7.6",
+    "yargs": "^16.2.0"
   }
 }
