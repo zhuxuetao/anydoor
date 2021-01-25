@@ -3,6 +3,7 @@ const chalk = require('chalk')
 const conf = require('./config/defaultConfig')
 const path = require("path")
 const route = require('./helper/route')
+const openUrl = require('./helper/openUrl')
 
 class Server {
     constructor (config) {
@@ -19,6 +20,8 @@ class Server {
         server.listen(this.conf.port, this.conf.hostName, () => {
             const addr = `http://${this.conf.hostName}:${this.conf.port}`
             console.info(`Server started at${chalk.green(addr)}`)
+            console.info(`父进程的 pid 是 ${process.ppid}`)
+            openUrl(addr)
         })
     }
 }
