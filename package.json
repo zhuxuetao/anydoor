@@ -4,7 +4,7 @@
   "description": "first web server",
   "main": "src/app.js",
   "bin": {
-    "my-anydoor": "bin/anydoor"
+    "anydoor": "bin/anydoor"
   },
   "scripts": {
     "lint": "eslint .",
